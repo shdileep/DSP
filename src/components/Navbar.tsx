@@ -43,7 +43,7 @@ export default function Navbar({
         { id: 'projects', label: 'Projects' },
         { id: 'architecture', label: 'Architecture' },
         { id: 'experience', label: 'Experience' },
-        { id: 'blogs', label: 'Blogs' },
+        { id: 'certifications', label: 'Certifications' },
         { id: 'contact', label: 'Contact' }
       ];
 

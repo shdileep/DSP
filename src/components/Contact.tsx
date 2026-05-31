@@ -125,9 +125,9 @@ export default function Contact({ resumeData, theme, customOverlayColor }: Conta
         }).toString()
       })
       .then(res => {
-        const isNetlifyHost = window.location.hostname.endsWith('netlify.app') || window.location.hostname.includes('netlify');
+        const isProduction = !['localhost', '127.0.0.1'].includes(window.location.hostname);
         
-        if (res.ok && isNetlifyHost) {
+        if (res.ok && isProduction) {
           setStatus('success');
           setFormState({ name: '', email: '', subject: '', message: '' });
           setErrors({ name: '', email: '', subject: '', message: '' });
