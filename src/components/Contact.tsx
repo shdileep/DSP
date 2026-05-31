@@ -110,34 +110,34 @@ export default function Contact({ resumeData, theme, customOverlayColor }: Conta
       setTimeout(() => setStatus('idle'), 5000);
     })
     .catch(err => {
-      console.warn('API Endpoint failed, attempting Netlify Forms fallback:', err.message);
+      console.warn('API Endpoint failed, attempting production FormSubmit.co relay:', err.message);
       
-      // Try Netlify Forms POST
-      fetch('/', {
+      // Submit to FormSubmit.co ajax relay
+      fetch('https://formsubmit.co/ajax/dileepgalla200056@gmail.com', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-          'form-name': 'contact',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
           name: trimmedName,
           email: trimmedEmail,
           subject: trimmedSubject,
           message: trimmedMessage
-        }).toString()
+        })
       })
       .then(res => {
-        const isProduction = !['localhost', '127.0.0.1'].includes(window.location.hostname);
-        
-        if (res.ok && isProduction) {
+        if (res.ok) {
           setStatus('success');
           setFormState({ name: '', email: '', subject: '', message: '' });
           setErrors({ name: '', email: '', subject: '', message: '' });
           setTimeout(() => setStatus('idle'), 5000);
         } else {
-          throw new Error('Netlify form submission skipped or failed.');
+          throw new Error('FormSubmit.co relay failed.');
         }
       })
-      .catch(netlifyErr => {
-        console.error('All form submission channels failed:', netlifyErr);
+      .catch(relayErr => {
+        console.error('All form submission channels failed:', relayErr);
         setStatus('fallback');
       });
     });
