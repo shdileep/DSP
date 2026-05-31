@@ -1,4 +1,5 @@
 import { ResumeData } from './types';
+import profileImg from './assets/images/Dileep_VIT _convocation.png';
 
 export const resumeData: ResumeData = {
   name: "Dileep Sai Galla",
@@ -153,4 +154,4 @@ export const resumeData: ResumeData = {
   ],
   blogs: []
 };
-export const imageAssetPath = '/src/assets/images/Dileep_VIT _convocation.png';
+export const imageAssetPath = profileImg;

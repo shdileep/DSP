@@ -13,6 +13,7 @@ import {
   ExternalLink
 } from 'lucide-react';
 import { ResumeData, ThemeStyle } from '../types';
+import profilePic from '../assets/images/dileepgalla.jpeg';
 import Timeline from '../components/Timeline';
 import Skills from '../components/Skills';
 import Projects from '../components/Projects';
@@ -52,7 +53,7 @@ export default function ExecutiveLayout({
             {/* Picture block */}
             <div className="relative w-56 h-56 rounded-xl overflow-hidden border border-slate-800 shadow-[0_15px_30px_rgba(0,0,0,0.5)] bg-slate-950 flex items-center justify-center">
               <img 
-                src="/src/assets/images/dileepgalla.jpeg"
+                src={profilePic}
                 alt="Dileep Sai Galla"
                 className="w-full h-full object-cover grayscale opacity-95 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-750 ease-out"
               />

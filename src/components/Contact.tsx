@@ -20,7 +20,7 @@ interface ContactProps {
 export default function Contact({ resumeData, theme, customOverlayColor }: ContactProps) {
   const [formState, setFormState] = useState({ name: '', email: '', subject: '', message: '' });
   const [errors, setErrors] = useState({ name: '', email: '', subject: '', message: '' });
-  const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'fallback'>('idle');
 
   const isTerminal = theme === 'terminal-os';
   const isMinimal = theme === 'minimal-linear';
@@ -73,8 +73,11 @@ export default function Contact({ resumeData, theme, customOverlayColor }: Conta
     if (hasError) return;
 
     setStatus('sending');
+
+    const apiBaseUrl = (import.meta as any).env?.VITE_API_URL || '';
+    const apiPath = apiBaseUrl ? `${apiBaseUrl.replace(/\/$/, '')}/api/contact` : '/api/contact';
     
-    fetch('/api/contact', {
+    fetch(apiPath, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -86,11 +89,17 @@ export default function Contact({ resumeData, theme, customOverlayColor }: Conta
         message: trimmedMessage
       })
     })
-    .then(res => {
+    .then(async res => {
+      const contentType = res.headers.get('content-type');
+      const isJson = contentType && contentType.includes('application/json');
+      
+      if (!isJson) {
+        throw new Error('API_NOT_FOUND_OR_STATIC');
+      }
+
       if (!res.ok) {
-        return res.json().then(data => {
-          throw new Error(data.error || 'Server error.');
-        });
+        const data = await res.json();
+        throw new Error(data.error || 'Server error.');
       }
       return res.json();
     })
@@ -101,9 +110,36 @@ export default function Contact({ resumeData, theme, customOverlayColor }: Conta
       setTimeout(() => setStatus('idle'), 5000);
     })
     .catch(err => {
-      console.error('Mail submit error:', err);
-      setStatus('idle');
-      alert('Failed to send message: ' + err.message);
+      console.warn('API Endpoint failed, attempting Netlify Forms fallback:', err.message);
+      
+      // Try Netlify Forms POST
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          'form-name': 'contact',
+          name: trimmedName,
+          email: trimmedEmail,
+          subject: trimmedSubject,
+          message: trimmedMessage
+        }).toString()
+      })
+      .then(res => {
+        const isNetlifyHost = window.location.hostname.endsWith('netlify.app') || window.location.hostname.includes('netlify');
+        
+        if (res.ok && isNetlifyHost) {
+          setStatus('success');
+          setFormState({ name: '', email: '', subject: '', message: '' });
+          setErrors({ name: '', email: '', subject: '', message: '' });
+          setTimeout(() => setStatus('idle'), 5000);
+        } else {
+          throw new Error('Netlify form submission skipped or failed.');
+        }
+      })
+      .catch(netlifyErr => {
+        console.error('All form submission channels failed:', netlifyErr);
+        setStatus('fallback');
+      });
     });
   };
 
@@ -197,7 +233,19 @@ export default function Contact({ resumeData, theme, customOverlayColor }: Conta
               </p>
             </div>
 
-            <form onSubmit={handleFormSubmit} className="space-y-4 mt-6">
+            <form 
+              onSubmit={handleFormSubmit} 
+              className="space-y-4 mt-6"
+              name="contact"
+              data-netlify="true"
+              data-netlify-honeypot="bot-field"
+            >
+              <input type="hidden" name="form-name" value="contact" />
+              <p className="hidden">
+                <label>
+                  Don't fill this out if you're human: <input name="bot-field" />
+                </label>
+              </p>
               <div>
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1.5 font-mono">
                   Full Name
@@ -317,6 +365,44 @@ export default function Contact({ resumeData, theme, customOverlayColor }: Conta
                     >
                       <Check className="w-4 h-4 text-emerald-400" />
                       <span>PAYLOAD SINKED SUCCESSFULLY! DILEEP NOTIFIED.</span>
+                    </motion.div>
+                  )}
+
+                  {status === 'fallback' && (
+                    <motion.div
+                      key="btn-fallback"
+                      initial={{ scale: 0.95, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      className="space-y-3"
+                    >
+                      <div className="text-amber-500 text-[11px] font-semibold font-mono flex items-center gap-1.5 leading-snug">
+                        <span>⚠️</span>
+                        <span>API is offline or static. Submit using your mail client:</span>
+                      </div>
+                      <a
+                        href={`mailto:${resumeData.email}?subject=${encodeURIComponent(formState.subject || 'Portfolio Contact')}&body=${encodeURIComponent(
+                          `Hi Dileep,\n\n${formState.message}\n\nFrom,\n${formState.name}\n(${formState.email})`
+                        )}`}
+                        className={`${buttonStyles} text-center`}
+                        style={{ backgroundColor: !isTerminal && !isSynth && !isMinimal ? customOverlayColor : undefined }}
+                        onClick={() => {
+                          setTimeout(() => {
+                            setFormState({ name: '', email: '', subject: '', message: '' });
+                            setErrors({ name: '', email: '', subject: '', message: '' });
+                            setStatus('idle');
+                          }, 1000);
+                        }}
+                      >
+                        <Mail className="w-4 h-4" />
+                        <span>Send via Email Client</span>
+                      </a>
+                      <button
+                        type="button"
+                        onClick={() => setStatus('idle')}
+                        className="w-full py-2 bg-slate-900 border border-slate-800 text-[10px] text-slate-400 hover:text-white rounded-lg font-mono uppercase tracking-wide cursor-pointer transition-colors"
+                      >
+                        Try Form Again
+                      </button>
                     </motion.div>
                   )}
                 </AnimatePresence>

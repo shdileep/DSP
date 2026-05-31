@@ -12,6 +12,7 @@ import {
   Sliders
 } from 'lucide-react';
 import { ResumeData, ThemeStyle } from '../types';
+import profilePic from '../assets/images/dileepgalla.jpeg';
 import Projects from '../components/Projects';
 import Skills from '../components/Skills';
 import Timeline from '../components/Timeline';
@@ -135,7 +136,7 @@ export default function ProductStudioLayout({
               {/* Profile image with inner shadow */}
               <div className="relative w-full h-full rounded-[2.2rem] overflow-hidden">
                 <img 
-                  src="/src/assets/images/dileepgalla.jpeg"
+                  src={profilePic}
                   alt="Dileep Sai Galla"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />

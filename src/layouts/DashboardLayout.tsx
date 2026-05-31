@@ -23,6 +23,7 @@ import Timeline from '../components/Timeline';
 import Certifications from '../components/Certifications';
 import Blogs from '../components/Blogs';
 import Contact from '../components/Contact';
+import profilePic from '../assets/images/dileepgalla.jpeg';
 
 interface DashboardLayoutProps {
   resumeData: ResumeData;
@@ -87,7 +88,7 @@ export default function DashboardLayout({
               {/* Inner scanning laser */}
               <div className="absolute inset-2 border border-sky-500/20 rounded-lg overflow-hidden flex items-center justify-center bg-slate-950/85">
                 <img 
-                  src="/src/assets/images/dileepgalla.jpeg"
+                  src={profilePic}
                   alt="Dileep Sai Galla"
                   className="w-full h-full object-cover grayscale brightness-90 contrast-110 hover:grayscale-0 transition-all duration-300"
                 />

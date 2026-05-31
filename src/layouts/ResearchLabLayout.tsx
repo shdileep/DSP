@@ -13,6 +13,7 @@ import {
   Sliders
 } from 'lucide-react';
 import { ResumeData, ThemeStyle } from '../types';
+import profilePic from '../assets/images/dileepgalla.jpeg';
 import Timeline from '../components/Timeline';
 import Skills from '../components/Skills';
 import Projects from '../components/Projects';
@@ -80,7 +81,7 @@ export default function ResearchLabLayout({
 
             <div className="w-48 h-48 overflow-hidden rounded border border-slate-300 relative bg-slate-200">
               <img 
-                src="/src/assets/images/dileepgalla.jpeg"
+                src={profilePic}
                 alt="Dileep Sai Galla"
                 className="w-full h-full object-cover grayscale opacity-90 contrast-125 brightness-95"
               />

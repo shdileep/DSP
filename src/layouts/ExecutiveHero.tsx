@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { Sparkles, Terminal, ArrowRight, Download, Cpu, Activity, ShieldAlert } from 'lucide-react';
 import { ResumeData } from '../types';
 import { generateResumePDF } from '../utils/generateResume';
+import profilePic from '../assets/images/dileepgalla.jpeg';
 
 interface ExecutiveHeroProps {
   resumeData: ResumeData;
@@ -94,7 +95,7 @@ export default function ExecutiveHero({ resumeData, customOverlayColor, onToggle
                 
                 {/* Image */}
                 <img 
-                  src="/src/assets/images/dileepgalla.jpeg"
+                  src={profilePic}
                   alt="Dileep Sai Galla"
                   className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105 filter grayscale contrast-110 brightness-95 group-hover:grayscale-0"
                 />
