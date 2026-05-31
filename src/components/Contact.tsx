@@ -238,14 +238,8 @@ export default function Contact({ resumeData, theme, customOverlayColor }: Conta
               className="space-y-4 mt-6"
               name="contact"
               data-netlify="true"
-              data-netlify-honeypot="bot-field"
             >
               <input type="hidden" name="form-name" value="contact" />
-              <p className="hidden">
-                <label>
-                  Don't fill this out if you're human: <input name="bot-field" />
-                </label>
-              </p>
               <div>
                 <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1.5 font-mono">
                   Full Name
