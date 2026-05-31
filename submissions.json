@@ -1,0 +1,50 @@
+[
+  {
+    "timestamp": "2026-05-31T08:40:46.679513Z",
+    "name": "Alice Recruiter",
+    "email": "alice@gmail.com",
+    "subject": "Job Inquiry",
+    "message": "Hi Dileep, we would love to hire you for a React and Python role.",
+    "ai_analysis": {
+      "sentiment": "Positive",
+      "sentiment_score": 1,
+      "category": "Career",
+      "entities_extracted": [
+        "React",
+        "Python"
+      ],
+      "auto_draft_reply": "Hello,\n\nThank you for reaching out regarding a career opportunity at your company! Dileep's virtual assistant here. Your inquiry has been classified under 'Career Opportunities'. We have processed your request, and Dileep will review your post and job description shortly. Since you mentioned technologies like React, Python, we think Dileep's background in GenAI, FastAPI, and React would align perfectly. Expect a reply in your inbox soon!\n\nBest Regards,\nDeepAI (Dileep's Virtual Assistant)"
+    }
+  },
+  {
+    "timestamp": "2026-05-31T08:45:32.201637Z",
+    "name": "Dileep Tester",
+    "email": "dileep@gmail.com",
+    "subject": "AI Pipeline Test",
+    "message": "Hi, I would love to build a FastAPI app with you using Python.",
+    "ai_analysis": {
+      "sentiment": "Positive",
+      "sentiment_score": 1,
+      "category": "Project",
+      "entities_extracted": [
+        "Python",
+        "FastAPI"
+      ],
+      "auto_draft_reply": "Hello,\n\nThank you for contacting Dileep regarding your project proposal! Dileep's virtual assistant here. Your project inquiry involving Python, FastAPI has been logged in our pipeline. Dileep specializes in high-fidelity full-stack implementations and agentic AI systems. We will review the project requirements and get back to you with potential timelines and architectures.\n\nBest Regards,\nDeepAI (Dileep's Virtual Assistant)"
+    }
+  },
+  {
+    "timestamp": "2026-05-31T09:32:24.186323Z",
+    "name": "Priya",
+    "email": "priyanka3@gmail.com",
+    "subject": "wwe",
+    "message": "hello",
+    "ai_analysis": {
+      "sentiment": "Neutral",
+      "sentiment_score": 0,
+      "category": "General Inquiry",
+      "entities_extracted": [],
+      "auto_draft_reply": "Hello,\n\nThank you for your message! Dileep's virtual assistant here. Dileep has received your message and will review your inquiry shortly. We will get back to you as soon as possible.\n\nBest Regards,\nDeepAI (Dileep's Virtual Assistant)"
+    }
+  }
+]
