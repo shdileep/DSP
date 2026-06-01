@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { ThemeStyle, ResumeData } from '../types';
 import { generateResumePDF } from '../utils/generateResume';
+import { formService } from '../api/formService.js';
 
 interface ContactProps {
   resumeData: ResumeData;
@@ -74,72 +75,21 @@ export default function Contact({ resumeData, theme, customOverlayColor }: Conta
 
     setStatus('sending');
 
-    const apiBaseUrl = (import.meta as any).env?.VITE_API_URL || '';
-    const apiPath = apiBaseUrl ? `${apiBaseUrl.replace(/\/$/, '')}/api/contact` : '/api/contact';
-    
-    fetch(apiPath, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: trimmedName,
-        email: trimmedEmail,
-        subject: trimmedSubject,
-        message: trimmedMessage
-      })
+    formService.submitContactForm({
+      name: trimmedName,
+      email: trimmedEmail,
+      subject: trimmedSubject,
+      message: trimmedMessage
     })
-    .then(async res => {
-      const contentType = res.headers.get('content-type');
-      const isJson = contentType && contentType.includes('application/json');
-      
-      if (!isJson) {
-        throw new Error('API_NOT_FOUND_OR_STATIC');
-      }
-
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || 'Server error.');
-      }
-      return res.json();
-    })
-    .then(data => {
+    .then(() => {
       setStatus('success');
       setFormState({ name: '', email: '', subject: '', message: '' });
       setErrors({ name: '', email: '', subject: '', message: '' });
       setTimeout(() => setStatus('idle'), 5000);
     })
-    .catch(err => {
-      console.warn('API Endpoint failed, attempting production FormSubmit.co relay:', err.message);
-      
-      // Submit to FormSubmit.co ajax relay
-      fetch('https://formsubmit.co/ajax/dileepgalla200056@gmail.com', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          name: trimmedName,
-          email: trimmedEmail,
-          subject: trimmedSubject,
-          message: trimmedMessage
-        })
-      })
-      .then(res => {
-        if (res.ok) {
-          setStatus('success');
-          setFormState({ name: '', email: '', subject: '', message: '' });
-          setErrors({ name: '', email: '', subject: '', message: '' });
-          setTimeout(() => setStatus('idle'), 5000);
-        } else {
-          throw new Error('FormSubmit.co relay failed.');
-        }
-      })
-      .catch(relayErr => {
-        console.error('All form submission channels failed:', relayErr);
-        setStatus('fallback');
-      });
+    .catch((error) => {
+      console.error('All contact submission channels failed:', error);
+      setStatus('fallback');
     });
   };
 
