@@ -305,10 +305,10 @@ export default function Contact({ resumeData, theme, customOverlayColor }: Conta
                       key="btn-success"
                       initial={{ scale: 0.95, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
-                      className="w-full bg-gradient-to-r from-emerald-950 to-green-900 border border-emerald-500/30 text-emerald-400 text-xs font-bold font-mono py-3 rounded-xl flex items-center justify-center gap-2"
+                      className="w-full bg-gradient-to-r from-emerald-950 to-green-900 border border-emerald-500/30 text-emerald-400 text-[10.5px] font-bold font-mono py-3 rounded-xl flex items-center justify-center gap-2"
                     >
-                      <Check className="w-4 h-4 text-emerald-400" />
-                      <span>PAYLOAD SINKED SUCCESSFULLY! DILEEP NOTIFIED.</span>
+                      <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                      <span className="text-center px-1">MESSAGE SENT SUCCESSFULLY! FOR URGENCY, CONTACT DILEEPGALLA200056@GMAIL.COM</span>
                     </motion.div>
                   )}
 
