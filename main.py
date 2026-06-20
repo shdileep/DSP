@@ -74,7 +74,7 @@ def save_submission_to_json(name: str, email: str, subject: str, message: str, a
                 submissions = json.load(f)
                 if not isinstance(submissions, list):
                     submissions = []
-        except Exception as e:
+except Exception as e:
             print(f"[Backup Error] Failed to read {SUBMISSIONS_FILE}: {e}")
             submissions = []
             
@@ -87,9 +87,12 @@ def save_submission_to_json(name: str, email: str, subject: str, message: str, a
     except Exception as e:
         print(f"[Backup Error] Failed to write {SUBMISSIONS_FILE}: {e}")
 
+# Configuration for the mock email server port
+MOCK_EMAIL_SERVER_PORT = 5001
+
 def forward_to_mock_email_server(name: str, email: str, subject: str, message: str, ai_analysis: dict):
     """Deliver real-time copy of contact email to mock SMTP relay server on port 5001"""
-    print(f"[Forwarder] Sending copy to Mock SMTP server at http://localhost:5001...")
+    print(f"[Forwarder] Sending copy to Mock SMTP server at http://localhost:{MOCK_EMAIL_SERVER_PORT}...")
     payload = {
         "to_email": "dileepgalla200056@gmail.com",
         "from_email": f"{name} <{email}>",
@@ -104,7 +107,6 @@ def forward_to_mock_email_server(name: str, email: str, subject: str, message: s
         ),
         "ai_metadata": ai_analysis
     }
-    
     try:
         encoded_data = json.dumps(payload).encode("utf-8")
         req = urllib.request.Request(
