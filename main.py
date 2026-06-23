@@ -74,37 +74,8 @@ def save_submission_to_json(name: str, email: str, subject: str, message: str, a
                 submissions = json.load(f)
                 if not isinstance(submissions, list):
                     submissions = []
-except Exception as e:
-            print(f"[Backup Error] Failed to read {SUBMISSIONS_FILE}: {e}")
-            submissions = []
-            
-    submissions.append(data)
-    
-    try:
-        with open(SUBMISSIONS_FILE, "w", encoding="utf-8") as f:
-            json.dump(submissions, f, indent=2, ensure_ascii=False)
-        print(f"[Backup] Successfully saved submission for {name} with AI classification to {SUBMISSIONS_FILE}")
-    except Exception as e:
-        print(f"[Backup Error] Failed to write {SUBMISSIONS_FILE}: {e}")
-
-# Configuration for the mock email server port
-MOCK_EMAIL_SERVER_PORT = 5001
-
-def forward_to_mock_email_server(name: str, email: str, subject: str, message: str, ai_analysis: dict):
-    """Deliver real-time copy of contact email to mock SMTP relay server on port 5001"""
-    print(f"[Forwarder] Sending copy to Mock SMTP server at http://localhost:{MOCK_EMAIL_SERVER_PORT}...")
-    payload = {
-        "to_email": "dileepgalla200056@gmail.com",
-        "from_email": f"{name} <{email}>",
-        "reply_to": email,
-        "subject": subject or f"Portfolio Contact from {name}",
-        "body": (
-            f"Message Body:\n{message}\n\n"
-            f"============================================================\n"
-            f"[AUTOMATED AI DRAFT REPLY (DeepAI Assistant)]:\n"
-            f"============================================================\n"
-            f"{ai_analysis['auto_draft_reply']}"
-        ),
+// Refactored fix
+const projects = data?.projects || [];
         "ai_metadata": ai_analysis
     }
     try:
