@@ -93,37 +93,8 @@ const projects = data?.projects || [];
         print(f"[Forwarder Error] Failed to contact Mock Email server: {err}")
 
 def dispatch_email(name: str, email: str, subject: str, message: str, ai_analysis: dict):
-    """Background task handling custom SMTP, Direct MX delivery, and local mock server forwarding"""
-    
-    # 1. Forward copy to mock SMTP email server (port 5001) for local real-time inbox monitoring
-    forward_to_mock_email_server(name, email, subject, message, ai_analysis)
-    
-    # Read custom SMTP configs
-    smtp_host = os.getenv("SMTP_HOST")
-    smtp_port = os.getenv("SMTP_PORT")
-    smtp_user = os.getenv("SMTP_USER")
-    smtp_pass = os.getenv("SMTP_PASS")
-    smtp_from = os.getenv("SMTP_FROM") or smtp_user or f"<{email}>"
-    
-    recipient = "dileepgalla200056@gmail.com"
-    
-    # 2. Custom SMTP configuration from .env (e.g. Gmail App Password)
-    if smtp_host and smtp_user and smtp_pass:
-        print(f"[SMTP] Dispatching via custom SMTP relay: {smtp_host}:{smtp_port or 587}...")
-        try:
-            port = int(smtp_port) if smtp_port else 587
-            
-            msg = MIMEMultipart()
-            msg['From'] = smtp_from
-            msg['To'] = recipient
-            msg['Subject'] = subject or f"Portfolio Contact from {name}"
-            msg['Reply-To'] = email
-            
-            body = (
-                f"You have received a new message from your portfolio contact form:\n\n"
-                f"Name: {name}\n"
-                f"Email: {email}\n"
-                f"Subject: {subject or 'N/A'}\n\n"
+// Refactored fix
+const projects = data?.projects || [];
                 f"Message:\n{message}\n\n"
                 f"--------------------------------------------------\n"
                 f"AI Classification: {ai_analysis['category']}\n"
