@@ -1,5 +1,6 @@
 
-DSP — Personal Portfolio
+#DSP — Personal Portfolio
+
 A modern, TypeScript-first personal portfolio for showcasing projects, skills, and contact information. DSP is built for performance, accessibility and simple deployment to platforms like Vercel, Netlify or GitHub Pages.
 
 One-line intro A fast, accessible developer portfolio built with TypeScript and modern web tooling to showcase projects, blogs and contact info.
