@@ -1,12 +1,12 @@
 import { motion } from 'motion/react';
 import { 
   Terminal, 
-  Cpu, 
   Menu, 
   X, 
   Sliders,
   Download
 } from 'lucide-react';
+import AnimatedChipCodeIcon from './AnimatedChipCodeIcon';
 import { ThemeStyle } from '../types';
 import { useState } from 'react';
 import { resumeData } from '../data';
@@ -76,7 +76,7 @@ export default function Navbar({
     ? 'border-b border-pink-500/20 bg-purple-950/45 backdrop-blur-xl text-pink-400'
     : isMinimal
     ? 'border-b border-slate-800 bg-[#0a0f1d]/50 backdrop-blur-md text-slate-100'
-    : 'border-b border-slate-800/60 bg-[#050816]/70 backdrop-blur-xl text-slate-100';
+    : 'border-b border-sky-500/15 bg-[#050816]/85 backdrop-blur-2xl text-slate-100';
 
   const linkHoverStyles = isTerminal
     ? 'hover:text-green-300 hover:bg-green-500/10 px-2 py-1 rounded'
@@ -84,74 +84,95 @@ export default function Navbar({
     ? 'hover:text-cyan-400 hover:shadow-[0_0_10px_rgba(34,211,238,0.4)] transition-all'
     : isMinimal
     ? 'hover:text-white transition-colors'
-    : 'hover:text-sky-400 transition-colors duration-200';
+    : 'text-slate-300 hover:text-sky-400 transition-colors duration-200';
+
+  const cubicEase = [0.16, 1, 0.3, 1] as const;
 
   return (
     <motion.nav 
       initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: cubicEase }}
       className={`fixed top-0 inset-x-0 h-16 z-40 transition-all duration-300 ${navStyles}`}
     >
       <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         
-        {/* Brand Logo */}
-        <div className="flex items-center gap-2 cursor-pointer select-none" onClick={() => handleLinkClick(isAdvanced ? 'executive-hero' : 'hero')}>
-          {!isTerminal && (
-            <div className="p-1 px-2.5 rounded-lg bg-sky-500/10 text-sky-400 border border-sky-500/20 flex items-center gap-1.5" style={{ borderColor: customOverlayColor + '30', color: customOverlayColor }}>
-              <Cpu className="w-4 h-4 animate-pulse" />
-              <span className="text-[10px] font-mono font-bold uppercase tracking-wider relative top-[0.5px]">AI/ML</span>
-            </div>
-          )}
-          <span className={`text-sm sm:text-base font-extrabold tracking-tight ${isTerminal ? 'font-mono glow-font-green' : isSynth ? 'text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-400 to-cyan-400' : 'font-sans'}`}>
-            {logoText}
+        {/* Brand Logo with Exact Animated Chip Code Icon */}
+        <motion.div 
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.1, ease: cubicEase }}
+          className="flex items-center gap-2.5 cursor-pointer select-none group" 
+          onClick={() => handleLinkClick(isAdvanced ? 'executive-hero' : 'hero')}
+          style={{ willChange: 'transform, opacity' }}
+        >
+          <AnimatedChipCodeIcon size={32} />
+          <span className="text-sm sm:text-base font-extrabold tracking-tight">
+            <span className="text-sky-400">Dileep</span>{' '}
+            <span className="text-white">Sai Galla</span>
           </span>
-        </div>
+        </motion.div>
 
-        {/* Desktop Sections */}
-        <div className="hidden lg:flex items-center gap-6 text-xs font-semibold">
-          {sections.map(sec => (
-            <button
+        {/* Desktop Sections with Staggered Entrance and Draw-in Underline on Hover */}
+        <div className="hidden lg:flex items-center gap-7 text-xs font-semibold">
+          {sections.map((sec, idx) => (
+            <motion.button
               key={sec.id}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ 
+                duration: 0.4, 
+                delay: 0.1 + (idx * 0.04), // Staggered at 100ms + 40ms per item
+                ease: cubicEase 
+              }}
               onClick={() => handleLinkClick(sec.id)}
-              className={`cursor-pointer ${linkHoverStyles}`}
+              className="relative py-1 cursor-pointer text-slate-300 hover:text-white transition-colors group select-none"
+              style={{ willChange: 'transform, opacity' }}
             >
-              {isTerminal ? `_ls ${sec.label.toLowerCase()}` : sec.label}
-            </button>
+              <span>{isTerminal ? `_ls ${sec.label.toLowerCase()}` : sec.label}</span>
+              
+              {/* Underline draws in from left to right (200ms, transform-origin left, scaleX 0->1) */}
+              <span 
+                className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-sky-400 to-cyan-300 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out pointer-events-none rounded-full" 
+              />
+            </motion.button>
           ))}
         </div>
 
         {/* Action Button Links */}
         <div className="hidden sm:flex items-center gap-3">
-          {/* Portfolio Transformer toggle button */}
-          <button
+          {/* Portfolio Transformer toggle button with periodic 4-5s shimmer */}
+          <motion.button
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 + (sections.length * 0.04), ease: cubicEase }}
             onClick={toggleMode}
-            className={`cursor-pointer px-4 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
-              isTerminal
-                ? 'border border-green-500/40 text-green-400 bg-green-500/5 hover:bg-green-500/10'
-                : isSynth
-                ? 'border border-indigo-500/50 bg-indigo-950/20 text-[#a5b4fc] hover:shadow-[0_0_12px_rgba(139,92,246,0.3)] shadow-indigo-500/20'
-                : 'border border-slate-700/80 bg-slate-900/60 text-slate-100 hover:border-slate-500/90'
-            }`}
+            className="relative overflow-hidden cursor-pointer px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 border border-sky-500/20 bg-sky-500/5 text-slate-300 hover:bg-sky-500/15 hover:text-white group"
+            style={{ willChange: 'transform, opacity' }}
           >
-            <Sliders className="w-3.5 h-3.5 text-amber-500" />
-            <span>{isAdvanced ? 'Original Portfolio' : 'Portfolio Transformer'}</span>
-            <span className="flex h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
-          </button>
+            {/* Shimmer sweep effect running every 4.5s */}
+            <span 
+              className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-sky-400/20 to-transparent pointer-events-none"
+              style={{
+                animation: 'shimmerSweep 4.5s infinite linear'
+              }}
+            />
+            <Sliders className="w-3.5 h-3.5 text-amber-400" />
+            <span className="relative z-10">{isAdvanced ? 'Original Portfolio' : 'Transformer'}</span>
+            <span className="relative z-10 flex h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
+          </motion.button>
 
-          {/* CV Download printable */}
-          <button
-            onClick={() => generateResumePDF(resumeData)}
-            className={`cursor-pointer px-4.5 py-1.5 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 ${
-              isTerminal
-                ? 'bg-green-600 hover:bg-green-500 text-black font-semibold'
-                : isSynth
-                ? 'bg-gradient-to-r from-pink-500 to-indigo-600 hover:shadow-[0_0_15px_rgba(236,72,153,0.4)] text-white'
-                : 'bg-sky-500 hover:bg-sky-400 text-white shadow-md'
-            }`}
+          {/* Let's Connect CTA Button with Hover Bloom (1.03 scale) and Click Tactile Scale (0.98) */}
+          <motion.button
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.14 + (sections.length * 0.04), ease: cubicEase }}
+            onClick={() => handleLinkClick('contact')}
+            className="cursor-pointer px-5 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 shadow-md shadow-sky-500/20 hover:shadow-[0_0_22px_rgba(56,189,248,0.45)] hover:scale-[1.03] active:scale-[0.98] transition-all duration-200 ease-out flex items-center gap-1.5"
+            style={{ willChange: 'transform, opacity' }}
           >
-            <Download className="w-3.5 h-3.5" />
-            <span>Resume</span>
-          </button>
+            <span>Let&apos;s Connect</span>
+          </motion.button>
         </div>
 
         {/* Mobile menu trigger */}

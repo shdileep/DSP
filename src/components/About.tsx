@@ -17,8 +17,8 @@ export default function About({ resumeData, theme, customOverlayColor }: AboutPr
     {
       icon: BookOpen,
       title: 'Academic Credentials',
-      desc: 'Pursuing Integrated M.Tech at Vellore Institute of Technology, Chennai (Aug 2021 - May 2026).',
-      highlight: 'M.Tech Candidate'
+      desc: 'Graduated with an Integrated M.Tech in Software Engineering from Vellore Institute of Technology, Chennai (Aug 2021 - May 2026).',
+      highlight: 'M.Tech Graduate'
     },
     {
       icon: Award,
@@ -29,8 +29,8 @@ export default function About({ resumeData, theme, customOverlayColor }: AboutPr
     {
       icon: Briefcase,
       title: 'Production Internships',
-      desc: 'Shipped AI architectures, vLLM prompt engines, and full-stack platforms at Easehawk Technologies and Externsclub.',
-      highlight: '3 Engineering Internships'
+      desc: 'Shipped AI architectures, agentic workflows, and full-stack platforms at Renocred, Easehawk Technologies, and Externsclub.',
+      highlight: '4 Engineering Internships'
     }
   ];
 
@@ -73,9 +73,7 @@ export default function About({ resumeData, theme, customOverlayColor }: AboutPr
         <div className="lg:col-span-6 space-y-6">
           <div className={containerStyles}>
             <p className={`leading-relaxed text-sm ${isTerminal ? 'text-green-400' : 'text-slate-300'}`}>
-              I am Dileep Sai Galla, an <strong>AI Systems Engineer and Architect</strong>. I specialize in merging advanced Machine Learning heuristics with reliable full-stack application development. 
-              <br /><br />
-              Throughout my academic tenure at <strong>Vellore Institute of Technology (VIT Chennai)</strong>, I have worked deeply on resolving performance degradation issues in retrieval frameworks, orchestrating multiple AI agents via prompt tuning, and accelerating routing computations using pathfinding algorithms.
+              <strong>AI/ML Engineer</strong> specializing in production AI systems, agentic workflows, and scalable backend architecture. Engineered and deployed AI products spanning RAG, semantic search, autonomous agents, intelligent automation, and developer tooling, with end-to-end ownership from system architecture to production deployment and optimization.
             </p>
           </div>
         </div>

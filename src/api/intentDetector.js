@@ -1,12 +1,34 @@
 export const intentDetector = {
   detect: (text) => {
     const q = text.toLowerCase().trim();
+
+    // 1. Immediate override: Security & backend protection check
+    const securityTerms = [
+      'system prompt', 'internal prompt', 'backend logic', 'internal architecture', 
+      'reveal prompt', 'ignore previous', 'jailbreak', 'api key', 'secret', 'password',
+      'credentials', 'database uri', 'connection string', 'backend code', 'file system',
+      'server files', 'env file', '.env', 'source code of server'
+    ];
+    if (securityTerms.some(term => q.includes(term))) {
+      return { intent: 'security_guardrail', confidence: 1.0 };
+    }
+
+    // 2. Immediate override: CGPA / Grade factual accuracy check
+    const cgpaTerms = ['cgpa', 'gpa', 'grades', 'marks', 'percentage', 'score', 'academic score', 'college marks', 'rank in vit'];
+    if (cgpaTerms.some(term => q.includes(term))) {
+      return { intent: 'cgpa_or_grades', confidence: 1.0 };
+    }
+
+    // 3. Immediate override: LinkedIn exact inquiry
+    if (q.includes('linkedin')) {
+      return { intent: 'linkedin', confidence: 1.0 };
+    }
     
     // Core intents with expanded keyword dictionaries
     const intents = [
       {
         name: 'greetings',
-        keywords: ['hello', 'hi', 'hey', 'greetings', 'welcome', 'morning', 'afternoon', 'evening', 'yo'],
+        keywords: ['hello', 'hi', 'hey', 'greetings', 'welcome', 'morning', 'afternoon', 'evening', 'yo', 'sup'],
         score: 0
       },
       {
@@ -21,12 +43,12 @@ export const intentDetector = {
       },
       {
         name: 'skills',
-        keywords: ['skill', 'stack', 'languages', 'competencies', 'technologies', 'framework', 'python', 'javascript', 'typescript', 'react', 'pytorch', 'tensorflow', 'fastapi', 'celery', 'docker', 'database', 'sql', 'postgres', 'mysql', 'agentic', 'prompt', 'langchain', 'hugging face', 'ml', 'ai', 'container', 'programming', 'tools'],
+        keywords: ['skill', 'stack', 'languages', 'competencies', 'technologies', 'framework', 'python', 'javascript', 'typescript', 'react', 'pytorch', 'tensorflow', 'fastapi', 'celery', 'docker', 'database', 'sql', 'postgres', 'mysql', 'agentic', 'prompt', 'langchain', 'hugging face', 'ml', 'ai', 'container', 'programming', 'tools', 'rag'],
         score: 0
       },
       {
         name: 'projects',
-        keywords: ['project', 'projects', 'nexttrip', 'ujjwal', 'fitmitra', 'booking', 'waste', 'routing', 'app', 'system', 'build', 'develop', 'create', 'portfolio', 'done', 'built', 'made'],
+        keywords: ['project', 'projects', 'nexttrip', 'ujjwal', 'fitmitra', 'shubh', 'hirezeno', 'booking', 'waste', 'routing', 'app', 'system', 'build', 'develop', 'create', 'portfolio', 'done', 'built', 'made', 'studio'],
         score: 0
       },
       {
@@ -36,7 +58,7 @@ export const intentDetector = {
       },
       {
         name: 'experience',
-        keywords: ['experience', 'job', 'work', 'intern', 'employment', 'easehawk', 'externsclub', 'internship', 'career', 'worked', 'company', 'role', 'history', 'working'],
+        keywords: ['experience', 'job', 'work', 'intern', 'employment', 'renocred', 'easehawk', 'externsclub', 'internship', 'career', 'worked', 'company', 'role', 'history', 'working'],
         score: 0
       },
       {
@@ -51,7 +73,7 @@ export const intentDetector = {
       },
       {
         name: 'achievements',
-        keywords: ['achievement', 'achievements', 'award', 'patent', 'patents', 'hackathon', 'hackerearth', 'winner', 'competition', 'invented', 'publications', 'research'],
+        keywords: ['achievement', 'achievements', 'award', 'patent', 'patents', 'hackathon', 'hackerearth', 'winner', 'competition', 'invented', 'publications', 'research', '202641010900'],
         score: 0
       },
       {
@@ -97,12 +119,12 @@ export const intentDetector = {
         }
       }
       if (intent.name === 'experience') {
-        if (/where\s+did\s+he\s+work/i.test(q) || /current\s+role/i.test(q) || /what\s+is\s+he\s+working/i.test(q) || /internship/i.test(q) || /job/i.test(q) || /easehawk|externsclub|celery|locks|playwright/i.test(q)) {
+        if (/where\s+did\s+he\s+work/i.test(q) || /current\s+role/i.test(q) || /what\s+is\s+he\s+working/i.test(q) || /internship/i.test(q) || /job/i.test(q) || /renocred|easehawk|externsclub|celery|locks|playwright/i.test(q)) {
           intent.score += 1.2;
         }
       }
       if (intent.name === 'projects') {
-        if (/what\s+projects/i.test(q) || /projects\s+done/i.test(q) || /projects\s+built/i.test(q) || /tell\s+me\s+about\s+(nexttrip|ujjwal|fitmitra)/i.test(q) || /mapbox|dijkstra|route/i.test(q)) {
+        if (/what\s+projects/i.test(q) || /projects\s+done/i.test(q) || /projects\s+built/i.test(q) || /tell\s+me\s+about\s+(nexttrip|ujjwal|fitmitra|shubh|hirezeno)/i.test(q) || /mapbox|dijkstra|route|claude|judge0|ast|resume/i.test(q)) {
           intent.score += 1.2;
         }
       }
@@ -134,7 +156,7 @@ export const intentDetector = {
     });
 
     // Specific overrides for high-confidence targets
-    if (q.includes('nexttrip') || q.includes('ujjwal') || q.includes('fitmitra')) {
+    if (q.includes('nexttrip') || q.includes('ujjwal') || q.includes('fitmitra') || q.includes('shubh') || q.includes('hirezeno')) {
       bestIntent = 'projects';
       maxScore = Math.max(maxScore, 1.0);
     }

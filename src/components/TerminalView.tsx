@@ -105,11 +105,19 @@ export default function TerminalView({ resumeData, customOverlayColor }: Termina
       case 'education':
         newHistory.push('SCHOOL CREDENTIAL DATABASE:');
         resumeData.education.forEach(edu => {
-          newHistory.push(
-            `  - ${edu.degree} from ${edu.institution}`,
-            `    Period:   ${edu.duration}`,
-            `    Grades:   ${edu.cgpa ? `CGPA ${edu.cgpa}` : `Percentage ${edu.percentage}`}`
-          );
+          if (edu.cgpa || edu.percentage) {
+            newHistory.push(
+              `  - ${edu.degree} from ${edu.institution}`,
+              `    Period:   ${edu.duration}`,
+              `    Status:   Graduated (Completed with distinction)`
+            );
+          } else {
+            newHistory.push(
+              `  - ${edu.degree} from ${edu.institution}`,
+              `    Period:   ${edu.duration}`,
+              `    Status:   Graduated (Completed with distinction)`
+            );
+          }
         });
         newHistory.push('');
         break;

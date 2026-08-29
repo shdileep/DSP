@@ -13,7 +13,7 @@ export default function ExecutiveDashboard({ resumeData }: ExecutiveDashboardPro
     { label: 'Technologies', value: '25+', progress: 90, desc: 'Python, JS, C++, Kotlin, PyTorch' },
     { label: 'Certifications', value: '6+', progress: 100, desc: 'IBM, HackerRank validated' },
     { label: 'Research & IP Record', value: '1 Patent', progress: 100, desc: 'Garbage Collection Routing Patent' },
-    { label: 'Engineering Internships', value: '3 Shipped', progress: 100, desc: 'Easehawk, Externsclub, Core' }
+    { label: 'Engineering Internships', value: '4 Shipped', progress: 100, desc: 'Renocred, Easehawk, Externsclub, Core' }
   ];
 
   const coreExpertise = [

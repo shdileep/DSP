@@ -26,7 +26,7 @@ const SCREENS = ['splash', 'signin', 'onboard', 'processing', 'dashboard', 'chat
 type Screen = typeof SCREENS[number];
 
 const DURATIONS: Record<Screen, number> = {
-  splash: 2500, signin: 3200, onboard: 4800, processing: 4500, dashboard: 7000, chat: 4500
+  splash: 1300, signin: 1500, onboard: 1800, processing: 1500, dashboard: 2200, chat: 1800
 };
 
 const variants = {
@@ -97,7 +97,7 @@ function SignIn() {
       i++;
       setTypedEmail(emailVal.slice(0, i));
       if (i >= emailVal.length) clearInterval(t);
-    }, 100);
+    }, 40);
     return () => clearInterval(t);
   }, []);
 

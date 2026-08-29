@@ -43,11 +43,15 @@ export default function ExecutiveExperience({ resumeData }: ExecutiveExperienceP
                     <Calendar className="w-3.5 h-3.5 text-slate-550" />
                     {exp.duration}
                   </span>
-                  <span className="hidden sm:inline text-slate-700">|</span>
-                  <span className="flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-slate-555" />
-                    {exp.location}
-                  </span>
+                  {exp.location && (
+                    <>
+                      <span className="hidden sm:inline text-slate-700">|</span>
+                      <span className="flex items-center gap-1.5">
+                        <MapPin className="w-3.5 h-3.5 text-slate-555" />
+                        {exp.location}
+                      </span>
+                    </>
+                  )}
                 </div>
               </div>
 

@@ -17,6 +17,7 @@ export const portfolioKnowledgeBase = {
       institution: "Vellore Institute of Technology",
       degree: "Integrated M.Tech in Software Engineering",
       duration: "Aug 2021 – May 2026",
+      status: "Graduated",
       location: "Chennai, India"
     },
     {
@@ -52,10 +53,22 @@ export const portfolioKnowledgeBase = {
   ],
   experience: [
     {
+      company: "Renocred",
+      role: "Web Developer Intern",
+      location: "Remote",
+      duration: "Jul 2026 – Present",
+      bullets: [
+        "Engineering responsive web interfaces, modern component architectures, and dynamic state management.",
+        "Integrating full-stack REST/GraphQL API endpoints and scalable backend microservices.",
+        "Optimizing web performance, client rendering latency, and cross-platform responsive compatibility.",
+        "Collaborating on automated testing pipelines and reliable production release workflows."
+      ]
+    },
+    {
       company: "Easehawk Technologies Pvt. Ltd.",
       role: "AI/ML Architect & Full Stack Engineer Intern",
-      location: "Rohini, Delhi",
-      duration: "May 2026 – Present",
+      location: "Remote",
+      duration: "May 2026 – Jul 2026",
       bullets: [
         "Orchestrated multi-agent workspace pipelines using FastAPI and Celery, accelerating request throughput by 42%.",
         "Pioneered high-recall RAG pipelines with hybrid semantic-keyword search, reducing token overhead by 30%.",
@@ -115,6 +128,32 @@ export const portfolioKnowledgeBase = {
       ],
       stack: ["Node.js", "Express", "React", "Mapbox GL", "PostgreSQL", "K-Means", "Dijkstra"],
       problem: "Static waste routing leads to premature collections and overflowing bins, raising fuel costs and carbon footprints."
+    },
+    {
+      title: "Shubh AI Studio",
+      subtitle: "Autonomous Prompt-to-Website, Code-to-Image & Notes Studio",
+      duration: "Jun 2026 – Present",
+      bullets: [
+        "Engineered an Antigravity-style Prompt-to-Website builder generating full-stack responsive web applications with real-time browser preview in under 4 seconds.",
+        "Built a neural Code-to-AI Image Generator translating code components, system architectures, and UI logic into high-fidelity design mockups.",
+        "Architected an automated AI Notes & Technical Doc Maker producing structured markdown summaries, syntax breakdowns, and study cheat-sheets.",
+        "Deployed an autonomous multi-agent swarm (LangGraph/AutoGen) with isolated Judge0 sandbox containerization for secure multi-runtime compiling."
+      ],
+      stack: ["React", "TypeScript", "FastAPI", "Docker", "Claude 3.5", "LangGraph", "SDXL / Imagen", "Judge0", "Tailwind CSS"],
+      problem: "Developers spend excessive hours manually drafting boilerplate web templates, producing visual architecture diagrams, and writing tedious technical notes."
+    },
+    {
+      title: "HireZeno 2.O",
+      subtitle: "AI Recruitment & Resume Intelligence Platform",
+      duration: "Jul 2024 – Present",
+      bullets: [
+        "Architected an end-to-end Streamlit platform for resume parsing (PDF/DOCX/OCR), extracting contact info, skills, and experience.",
+        "Engineered real-time ATS optimization scoring, missing-keyword detection, and section validation heuristics.",
+        "Built semantic matching between candidate resumes and job descriptions with multi-role ranking algorithms.",
+        "Deployed multi-algorithm ML & deep learning layers predicting hiring probability with exportable PDF evaluation reports."
+      ],
+      stack: ["Python", "Streamlit", "PyTorch", "Transformers", "NLP / OCR", "Scikit-Learn", "FastAPI", "PDF Engine"],
+      problem: "Traditional hiring suffers from slow manual resume screening, keyword mismatch, and inconsistent candidate qualification assessment."
     },
     {
       title: "FitMitra",

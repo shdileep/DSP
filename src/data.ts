@@ -5,7 +5,7 @@ export const resumeData: ResumeData = {
   name: "Dileep Sai Galla",
   title: "AI/ML Architect & Full Stack AI Engineer",
   subTitle: "M.Tech in Software Engineering @ VIT Chennai",
-  shortSummary: "Recent Integrated M.Tech graduate in Software Engineering specializing in AI systems, data engineering, and scalable analytics workflows. Skilled in Python, SQL, ETL pipelines, and API optimization, with experience in LLM evaluation, edge-case analysis, and validating reliable AI-driven products.",
+  shortSummary: "AI/ML Engineer specializing in production AI systems, agentic workflows, and scalable backend architecture. Engineered and deployed AI products spanning RAG, semantic search, autonomous agents, intelligent automation, and developer tooling, with end-to-end ownership from system architecture to production deployment and optimization.",
   email: "dileepgalla200056@gmail.com",
   phone: "",
   linkedin: "https://www.linkedin.com/in/galla-dileep-sai-b85829390/",
@@ -51,10 +51,22 @@ export const resumeData: ResumeData = {
   ],
   experience: [
     {
+      company: "Renocred",
+      role: "Web Developer Intern",
+      location: "Remote",
+      duration: "Jul 2026 – Present",
+      bullets: [
+        "Engineering responsive web interfaces, modern component architectures, and dynamic state management.",
+        "Integrating full-stack REST/GraphQL API endpoints and scalable backend microservices.",
+        "Optimizing web performance, client rendering latency, and cross-platform responsive compatibility.",
+        "Collaborating on automated testing pipelines and reliable production release workflows."
+      ]
+    },
+    {
       company: "Easehawk Technologies Pvt. Ltd.",
       role: "AI/ML Architect & Full Stack Engineer Intern",
-      location: "Rohini, Delhi",
-      duration: "May 2026 – Present",
+      location: "Remote",
+      duration: "May 2026 – Jul 2026",
       bullets: [
         "Orchestrated multi-agent workspace pipelines using FastAPI and Celery, accelerating request throughput by 42%.",
         "Pioneered high-recall RAG pipelines with hybrid semantic-keyword search, reducing token overhead by 30%.",
@@ -120,18 +132,44 @@ export const resumeData: ResumeData = {
       architecture: "Bin Sensors -> IoT Telemetry Server -> KMeans Clusterizer -> A* Route Optimizer -> Fleet Driver Dashboard"
     },
     {
-      title: "FitMitra",
-      subtitle: "ML-Based Android Fitness Application",
-      duration: "Jul 2024 – Sep 2025",
+      title: "Shubh AI Studio",
+      subtitle: "Autonomous Prompt-to-Website, Code-to-Image & Notes Studio",
+      duration: "Jun 2026 – Present",
       bullets: [
-        "Built an Android body metric classifier with TensorFlow Lite and Kotlin, hitting an 82% target planning accuracy.",
-        "Secured mobile endpoints using OAuth2 and rotating dual-token JWT pipelines, preventing 99% of unauthorized accesses.",
-        "Engineered PyTorch-based BMR and calorie estimation heuristics, generating customized macro splits in under 150ms."
+        "Engineered an Antigravity-style Prompt-to-Website builder generating full-stack responsive web applications with real-time browser preview in under 4 seconds.",
+        "Built a neural Code-to-AI Image Generator translating code components, system architectures, and UI logic into high-fidelity design mockups.",
+        "Architected an automated AI Notes & Technical Doc Maker producing structured markdown summaries, syntax breakdowns, and study cheat-sheets.",
+        "Deployed an autonomous multi-agent swarm (LangGraph/AutoGen) with isolated Judge0 sandbox containerization for secure multi-runtime compiling."
       ],
-      stack: ["Android SDK", "Kotlin", "Flask", "PyTorch", "TensorFlow Lite", "K-Means", "MySQL", "JWT"],
-      problem: "Generic fitness applications lack personalized biometric planning, causing high user churn and drop-out rates.",
-      aiFeatures: ["ML estimation for custom calorie thresholds (BMR)", "TensorFlow Lite clustering for user exercises on Android", "YouTube API video recommendation engine"],
-      architecture: "Android Client -> PyTorch BMR estimator -> TensorFlow Lite Predictor -> Content Recommender -> JWT Authenticated API"
+      stack: ["React", "TypeScript", "FastAPI", "Docker", "Claude 3.5", "LangGraph", "SDXL / Imagen", "Judge0", "Tailwind CSS"],
+      problem: "Developers spend excessive hours manually drafting boilerplate web templates, producing visual architecture diagrams, and writing tedious technical notes.",
+      aiFeatures: [
+        "Prompt-to-Website & Web App generation with instant live browser rendering",
+        "Code-to-AI Image generator translating component trees into visual UI mockups",
+        "AI Notes, Technical Documentation & study flashcard maker",
+        "Self-healing Multi-Agent swarm (LangGraph/AutoGen) with Judge0 sandbox container"
+      ],
+      architecture: "Natural Prompt / Code Ingest -> Multi-Agent Swarm (LangGraph) -> Web Synthesizer / Image Generator / Notes Engine -> Judge0 Sandbox -> Live Browser Viewport"
+    },
+    {
+      title: "HireZeno 2.O",
+      subtitle: "AI Recruitment & Resume Intelligence Platform",
+      duration: "Jul 2024 – Present",
+      bullets: [
+        "Architected an end-to-end Streamlit platform for resume parsing (PDF/DOCX/OCR), extracting contact info, skills, and experience.",
+        "Engineered real-time ATS optimization scoring, missing-keyword detection, and section validation heuristics.",
+        "Built semantic matching between candidate resumes and job descriptions with multi-role ranking algorithms.",
+        "Deployed multi-algorithm ML & deep learning layers predicting hiring probability with exportable PDF evaluation reports."
+      ],
+      stack: ["Python", "Streamlit", "PyTorch", "Transformers", "NLP / OCR", "Scikit-Learn", "FastAPI", "PDF Engine"],
+      problem: "Traditional hiring suffers from slow manual resume screening, keyword mismatch, and inconsistent candidate qualification assessment.",
+      aiFeatures: [
+        "Resume OCR parsing and structured Named Entity Recognition",
+        "Semantic JD-Resume vector matching and candidate ranking",
+        "Deep Learning hiring probability and resume intelligence score",
+        "Automated ATS optimization, keyword gap alerts, and exportable PDF reports"
+      ],
+      architecture: "Resume Ingest (PDF/DOCX) -> OCR Fallback -> NLP Schema Extractor -> Transformer Matcher -> ML Ensemble Classifier -> Recruiter Analytics Dashboard"
     }
   ],
   achievements: [

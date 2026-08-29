@@ -2,6 +2,8 @@ const synonymMap = {
   // Projects
   'nexttrip': ['nexttrip', 'trip', 'bus', 'ticket', 'booking', 'moxsend', 'reservation', 'checkout'],
   'ujjwal': ['ujjwal', 'ujjwal-hub', 'waste', 'garbage', 'route', 'dijkstra', 'driver', 'telemetry', 'collection', 'gps', 'route optimization'],
+  'shubh': ['shubh', 'shubh ai studio', 'studio', 'cloud ide', 'claude chat', 'judge0', 'autonomous agent', 'webgl', 'syntrix', 'ide'],
+  'hirezeno': ['hirezeno', 'hirezeno 2.o', 'resume intelligence', 'ats score', 'ocr parser', 'recruitment ai', 'resume matcher'],
   'fitmitra': ['fitmitra', 'fitness', 'exercise', 'tracker', 'health', 'pose', 'android', 'biometrics', 'bmr', 'calorie', 'pose estimator'],
   
   // Education

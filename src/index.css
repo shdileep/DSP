@@ -7,22 +7,50 @@
   --font-display: "Space Grotesk", sans-serif;
 }
 
-/* Animations & Glow Utilities */
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+/* ─────────────────────────────────────────────────────────── */
+/* PERMANENT GLOBAL SCROLLBAR SUPPRESSION                       */
+/* Removes default browser scrolling sticks everywhere         */
+/* ─────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE & Edge */
 }
 
-.animate-blink {
-  animation: blink 1s step-end infinite;
+*::-webkit-scrollbar {
+  width: 0px !important;
+  height: 0px !important;
+  display: none !important;
+  background: transparent !important;
 }
 
-.animate-spin-slow {
-  animation: spin 25s linear infinite;
+html, 
+body {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  overflow-x: hidden;
 }
 
-.animate-spin-reverse {
-  animation: spin 15s linear infinite reverse;
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0px !important;
+  height: 0px !important;
+  display: none !important;
+  background: transparent !important;
+}
+
+@keyframes shimmerSweep {
+  0% {
+    transform: translateX(-150%);
+  }
+  25%, 100% {
+    transform: translateX(200%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmerSweep 4.5s infinite ease-in-out;
 }
 
 .glow-font-green {
@@ -62,9 +90,10 @@
 
 /* Custom scrollbar hiding utilities */
 .no-scrollbar::-webkit-scrollbar {
-  display: none;
+  display: none !important;
+  width: 0px !important;
 }
 .no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none !important;  /* IE and Edge */
+  scrollbar-width: none !important;  /* Firefox */
 }

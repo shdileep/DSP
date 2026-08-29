@@ -3,6 +3,7 @@ import { Briefcase, Calendar, MapPin, GraduationCap, ChevronRight } from 'lucide
 import { ResumeData, ThemeStyle } from '../types';
 
 // Import actual logo images
+import renocredLogo from '../assets/images/renocred .png';
 import easehawkLogo from '../assets/images/easehawk_technologies_logo.jpg';
 import engineercoreLogo from '../assets/images/engineercore.jpg';
 import externsclubLogo from '../assets/images/externsclub_logo.jpg';
@@ -14,6 +15,12 @@ function CompanyLogo({ company, theme }: { company: string; theme: string }) {
   const logoClass = `w-10 h-10 shrink-0 select-none object-contain rounded-xl border p-1 bg-slate-950/60 ${
     isTerminal ? 'border-green-500/30' : 'border-slate-800'
   }`;
+
+  if (company.toLowerCase().includes('renocred')) {
+    return (
+      <img src={renocredLogo} alt="Renocred" className={logoClass} />
+    );
+  }
   
   if (company.includes('Easehawk')) {
     return (

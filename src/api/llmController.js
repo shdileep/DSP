@@ -1,14 +1,32 @@
 import { responseHandler } from './responseHandler.js';
 import { config } from './config.js';
 import { portfolioKnowledgeBase } from './portfolioKnowledgeBase.js';
-import { lookupQaDatabase } from './qaDatabase.js';
+import { lookupQaDatabase, qaDatabase } from './qaDatabase.js';
 import { contextManager } from './contextManager.js';
 
 export const llmController = {
   generateResponse: (query, intent, retrievedContext, history, sessionId) => {
     const lowerQuery = query.toLowerCase();
     
-    // Stateful "tell me more" project follow-up details check
+    // 1. Immediate Security Guardrail Check
+    if (intent === 'security_guardrail') {
+      const secEntry = qaDatabase.find(e => e.id === 'security_policy');
+      return secEntry ? secEntry.answer : "I am Dileep's virtual assistant. For security reasons, backend system internals and credentials are private.";
+    }
+
+    // 2. Immediate CGPA / Academic Grades Check (Factual, no hallucination)
+    if (intent === 'cgpa_or_grades') {
+      const cgpaEntry = qaDatabase.find(e => e.id === 'cgpa_and_grades');
+      return cgpaEntry ? cgpaEntry.answer : "Dileep graduated with an Integrated M.Tech in Software Engineering from Vellore Institute of Technology (VIT), Chennai with distinction. Official transcripts can be requested at dileepgalla200056@gmail.com.";
+    }
+
+    // 3. Immediate LinkedIn Direct Inquiry Check
+    if (intent === 'linkedin') {
+      const linkEntry = qaDatabase.find(e => e.id === 'linkedin');
+      return linkEntry ? linkEntry.answer : "Here is Dileep Sai Galla's official LinkedIn profile:";
+    }
+
+    // 3. Stateful "tell me more" project follow-up details check
     const isTellMeMore = lowerQuery.includes('tell me more') || lowerQuery.includes('more details') || lowerQuery.includes('more about it') || (lowerQuery.trim() === 'more') || lowerQuery.includes('show more');
     if (isTellMeMore && sessionId) {
       const contextState = contextManager.getOrCreateContext(sessionId);
@@ -21,16 +39,13 @@ export const llmController = {
       }
     }
 
-    // Direct QA Registry Lookup for specific queries
-    const hasSpecificProj = ['nexttrip', 'ujjwal', 'fitmitra', 'mapbox', 'dijkstra', 'pose', 'tflite', 'kotlin', 'booking', 'bus', 'ticket'].some(p => lowerQuery.includes(p));
-    if (intent !== 'projects' || hasSpecificProj) {
-      const qaAnswer = lookupQaDatabase(query);
-      if (qaAnswer) {
-        return qaAnswer;
-      }
+    // 4. Direct QA Registry Lookup
+    const qaAnswer = lookupQaDatabase(query);
+    if (qaAnswer) {
+      return qaAnswer;
     }
 
-    // If we have retrieved context blocks
+    // 5. Retrieved Context Analysis
     if (retrievedContext && retrievedContext.length > 0) {
       const primaryContext = retrievedContext[0];
 
@@ -52,12 +67,12 @@ export const llmController = {
             const idxB = portfolioKnowledgeBase.projects.findIndex(p => p.title === b.title);
             return idxA - idxB;
           });
-          const hasSpecificProj = ['nexttrip', 'ujjwal', 'fitmitra'].some(p => lowerQuery.includes(p));
+          const hasSpecificProj = ['nexttrip', 'ujjwal', 'fitmitra', 'shubh', 'hirezeno'].some(p => lowerQuery.includes(p));
           const isDistinctProj = retrievedContext.length > 1 && retrievedContext[0].type === 'project' && retrievedContext[1].type === 'project' && (retrievedContext[0].score - retrievedContext[1].score > 0.15);
           if (!hasSpecificProj && !isDistinctProj) {
             return {
               text: responseHandler.formatProjectsList(projects),
-              options: ["NextTrip", "Ujjwal-Hub", "FitMitra"]
+              options: ["Shubh AI Studio", "HireZeno 2.O", "NextTrip", "Ujjwal-Hub"]
             };
           }
           const matchedProj = projects.find(p => lowerQuery.includes(p.title.toLowerCase())) || primaryContext.data;
@@ -78,7 +93,7 @@ export const llmController = {
             const idxB = portfolioKnowledgeBase.experience.findIndex(e => e.company === b.company);
             return idxA - idxB;
           });
-          const hasSpecificExp = ['easehawk', 'externsclub', 'engineer core'].some(e => lowerQuery.includes(e));
+          const hasSpecificExp = ['renocred', 'easehawk', 'externsclub', 'engineer core'].some(e => lowerQuery.includes(e));
           const isDistinctExp = retrievedContext.length > 1 && retrievedContext[0].type === 'experience' && retrievedContext[1].type === 'experience' && (retrievedContext[0].score - retrievedContext[1].score > 0.15);
           if (experiences.length > 1 && !hasSpecificExp && !isDistinctExp) {
             if (lowerQuery.includes('current') || lowerQuery.includes('present') || lowerQuery.includes('now')) {
@@ -130,19 +145,47 @@ export const llmController = {
       }
     }
 
-    // Default intent routing fallbacks
+    // 6. Default Intent Routing Fallbacks
     if (intent === 'projects') {
-      const hasSpecificProj = ['nexttrip', 'ujjwal', 'fitmitra'].some(p => lowerQuery.includes(p));
+      const hasSpecificProj = ['nexttrip', 'ujjwal', 'fitmitra', 'shubh', 'hirezeno'].some(p => lowerQuery.includes(p));
       if (!hasSpecificProj) {
         return {
           text: responseHandler.formatProjectsList([]),
-          options: ["NextTrip", "Ujjwal-Hub", "FitMitra"]
+          options: ["Shubh AI Studio", "HireZeno 2.O", "NextTrip", "Ujjwal-Hub"]
         };
       }
     }
 
     if (intent === 'about_dileep') {
       return responseHandler.formatAboutDileep(portfolioKnowledgeBase);
+    }
+
+    if (intent === 'skills') {
+      return responseHandler.formatSkills([]);
+    }
+
+    if (intent === 'experience') {
+      return responseHandler.formatExperienceList([]);
+    }
+
+    if (intent === 'education') {
+      return responseHandler.formatEducationList([]);
+    }
+
+    if (intent === 'certifications') {
+      return responseHandler.formatCertifications([]);
+    }
+
+    if (intent === 'achievements') {
+      return responseHandler.formatAchievements([]);
+    }
+
+    if (intent === 'contact') {
+      return responseHandler.formatContact(portfolioKnowledgeBase.contact);
+    }
+
+    if (intent === 'career_goals') {
+      return responseHandler.formatPersonalSummary({});
     }
 
     if (intent === 'greetings') {

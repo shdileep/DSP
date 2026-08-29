@@ -75,7 +75,9 @@ function buildDocumentCorpus() {
       ...companyLower.split(/[^a-zA-Z0-9]/).filter(t => t.length >= 3),
       ...roleLower.split(/[^a-zA-Z0-9]/).filter(t => t.length >= 3)
     ];
-    if (companyLower.includes('easehawk')) {
+    if (companyLower.includes('renocred')) {
+      specificTags.push('renocred', 'react', 'web', 'present');
+    } else if (companyLower.includes('easehawk')) {
       specificTags.push('easehawk', 'celery', 'fastapi', 'present');
     } else if (companyLower.includes('externsclub')) {
       specificTags.push('externsclub', 't5', 'resumeai');
@@ -106,6 +108,10 @@ function buildDocumentCorpus() {
       specificTags.push('ujjwal', 'hub', 'ujjwal-hub', 'waste', 'garbage', 'route', 'driver');
     } else if (titleLower.includes('fitmitra')) {
       specificTags.push('fitness', 'exercise', 'tracker', 'health', 'pose');
+    } else if (titleLower.includes('shubh')) {
+      specificTags.push('shubh', 'studio', 'prompt-to-website', 'code-to-image', 'notes', 'judge0');
+    } else if (titleLower.includes('hirezeno')) {
+      specificTags.push('hirezeno', 'resume', 'ats', 'ocr', 'recruitment');
     }
     docs.push({
       id: `projects_${idx}`,

@@ -1,7 +1,7 @@
 import { ResumeData, ThemeStyle } from '../types';
 import ExecutiveHero from './ExecutiveHero';
 import ExecutiveDashboard from './ExecutiveDashboard';
-import ExecutiveProjects from './ExecutiveProjects';
+import AppleIPadMockup from '../components/AppleIPadMockup';
 import ExecutiveArchitecture from './ExecutiveArchitecture';
 import ExecutiveExperience from './ExecutiveExperience';
 import ExecutiveEducation from './ExecutiveEducation';
@@ -52,9 +52,11 @@ export default function AdvancedExecutivePortfolio({
         resumeData={resumeData}
       />
 
-      {/* 3. Featured Engineering Systems (Case Studies) */}
-      <ExecutiveProjects 
+      {/* 3. Featured Engineering Systems — Apple iPad Pro / ASUS Vivobook Interactive Studio */}
+      <AppleIPadMockup 
         resumeData={resumeData}
+        theme={theme}
+        customOverlayColor={customOverlayColor}
       />
 
       {/* 4. AI Multi-Agent Pipeline Showcase & Developer Intelligence Center */}

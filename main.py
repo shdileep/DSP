@@ -12,6 +12,7 @@ from pydantic import BaseModel
 
 # Import Local AI Pipeline
 import ai_pipeline
+import search_service
 
 # Initialize FastAPI App
 app = FastAPI(
@@ -38,11 +39,14 @@ class ContactRequest(BaseModel):
     subject: str = ""
     message: str
 
+class SearchRequest(BaseModel):
+    query: str
+
 def load_dotenv():
     """Manually parse .env variables to avoid external dependencies"""
     if os.path.exists(".env"):
         print("[Env] Loading configuration from .env file...")
-        with open(".env", "r", encoding="utf-8") as f:
+        with open(".env", "r", encoding="utf-8-sig") as f:
             for line in f:
                 line = line.strip()
                 if not line or line.startswith("#"):
@@ -74,8 +78,26 @@ def save_submission_to_json(name: str, email: str, subject: str, message: str, a
                 submissions = json.load(f)
                 if not isinstance(submissions, list):
                     submissions = []
-// Refactored fix
-const projects = data?.projects || [];
+        except Exception as e:
+            print(f"[Submissions Storage Error] Failed to read submissions: {e}")
+            submissions = []
+            
+    submissions.append(data)
+    
+    try:
+        with open(SUBMISSIONS_FILE, "w", encoding="utf-8") as f:
+            json.dump(submissions, f, indent=2, ensure_ascii=False)
+        print(f"[Submissions Storage] Saved submission to {SUBMISSIONS_FILE}")
+    except Exception as e:
+        print(f"[Submissions Storage Error] Failed to write submission: {e}")
+
+def forward_to_mock_server(name: str, email: str, subject: str, message: str, ai_analysis: dict):
+    payload = {
+        "to_email": os.environ.get("RECIPIENT_EMAIL", "dileepsaigalla@gmail.com"),
+        "from_email": email,
+        "reply_to": email,
+        "subject": subject or f"New message from {name}",
+        "body": message,
         "ai_metadata": ai_analysis
     }
     try:
@@ -93,8 +115,30 @@ const projects = data?.projects || [];
         print(f"[Forwarder Error] Failed to contact Mock Email server: {err}")
 
 def dispatch_email(name: str, email: str, subject: str, message: str, ai_analysis: dict):
-// Refactored fix
-const projects = data?.projects || [];
+    # 1. Forward to Mock Server if available
+    forward_to_mock_server(name, email, subject, message, ai_analysis)
+
+    recipient = os.environ.get("RECIPIENT_EMAIL", "dileepsaigalla@gmail.com")
+    smtp_host = os.environ.get("SMTP_HOST")
+    smtp_port = os.environ.get("SMTP_PORT")
+    smtp_user = os.environ.get("SMTP_USER")
+    smtp_pass = os.environ.get("SMTP_PASS")
+
+    # 2. Custom SMTP if configured
+    if smtp_host and smtp_user and smtp_pass:
+        try:
+            port = int(smtp_port) if smtp_port else 587
+            msg = MIMEMultipart()
+            msg['From'] = smtp_user
+            msg['To'] = recipient
+            msg['Subject'] = subject or f"Portfolio Contact from {name}"
+            msg['Reply-To'] = email
+
+            body = (
+                f"You have received a new message from your portfolio contact form:\n\n"
+                f"Name: {name}\n"
+                f"Email: {email}\n"
+                f"Subject: {subject or 'N/A'}\n\n"
                 f"Message:\n{message}\n\n"
                 f"--------------------------------------------------\n"
                 f"AI Classification: {ai_analysis['category']}\n"
@@ -195,6 +239,20 @@ async def contact_endpoint(payload: ContactRequest, background_tasks: Background
             "reply_draft_preview": ai_analysis["auto_draft_reply"]
         }
     }
+
+@app.post("/api/search")
+async def search_endpoint(payload: SearchRequest):
+    query = payload.query.strip()
+    if not query:
+        raise HTTPException(status_code=400, detail="Search query cannot be empty.")
+    return search_service.search_web_ai(query)
+
+@app.get("/api/search")
+async def search_get_endpoint(q: str = ""):
+    query = q.strip()
+    if not query:
+        raise HTTPException(status_code=400, detail="Query parameter 'q' cannot be empty.")
+    return search_service.search_web_ai(query)
 
 if __name__ == "__main__":
     import uvicorn

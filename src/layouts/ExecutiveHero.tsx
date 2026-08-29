@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { Sparkles, Terminal, ArrowRight, Download, Cpu, Activity, ShieldAlert } from 'lucide-react';
 import { ResumeData } from '../types';
 import { generateResumePDF } from '../utils/generateResume';
-import profilePic from '../assets/images/dileepgalla.jpeg';
+import profilePic from '../assets/images/Dileep_VIT _convocation.png';
 
 interface ExecutiveHeroProps {
   resumeData: ResumeData;
@@ -43,7 +43,7 @@ export default function ExecutiveHero({ resumeData, customOverlayColor, onToggle
           </div>
 
           <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-sans font-light">
-            Recent Integrated M.Tech graduate in Software Engineering specializing in AI systems, data engineering, and scalable analytics workflows. Skilled in Python, SQL, ETL pipelines, and API optimization, with experience in LLM evaluation, edge-case analysis, and validating reliable AI-driven products.
+            AI/ML Engineer specializing in production AI systems, agentic workflows, and scalable backend architecture. Engineered and deployed AI products spanning RAG, semantic search, autonomous agents, intelligent automation, and developer tooling, with end-to-end ownership from system architecture to production deployment and optimization.
           </p>
 
           {/* Action buttons */}

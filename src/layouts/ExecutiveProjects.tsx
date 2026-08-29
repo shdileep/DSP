@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import PreviewShell from '../components/previews/PreviewShell';
-import FitMitraPreview from '../components/previews/FitMitraPreview';
+import HireZenoPreview from '../components/previews/HireZenoPreview';
 import NextTripPreview from '../components/previews/NextTripPreview';
 import UjjwalHubPreview from '../components/previews/UjjwalHubPreview';
 import { ResumeData } from '../types';
@@ -55,23 +55,23 @@ export default function ExecutiveProjects({ resumeData }: ExecutiveProjectsProps
       ]
     },
     {
-      title: "FitMitra",
-      subtitle: "ML-Based Android Fitness Application",
-      challenge: "Generic fitness applications lack personalized biometric calculations, resulting in misaligned meal allocations and high user churn rates.",
-      solution: "Built a Kotlin Android client utilizing local on-device TensorFlow Lite classifiers and a PyTorch microservice to compute biometric calories and BMR.",
-      architecture: "Kotlin Mobile App ➔ PyTorch BMR Allocator ➔ On-Device TF Lite Classifier ➔ YouTube API Video Recommender ➔ SQLite Database syncs",
-      stack: ["Android SDK", "Kotlin", "Flask", "PyTorch", "TensorFlow Lite", "K-Means", "MySQL", "JWT"],
-      impact: "Returns personalized meal and caloric guidelines under 150ms. Secured client endpoints via OAuth2 and rotating dual-token JWT keys.",
-      results: "Hit an 82% target planning accuracy benchmark on exercise classifiers and body mass predictions.",
+      title: "HireZeno 2.O",
+      subtitle: "AI Recruitment & Resume Intelligence Platform",
+      challenge: "Recruiters and hiring managers spend hours manually reviewing resumes, missing qualified candidates due to rigid keyword matching and inconsistent grading.",
+      solution: "Architected an end-to-end Streamlit platform with PDF/DOCX OCR parsing, semantic JD-resume embeddings, and deep learning hiring probability prediction.",
+      architecture: "Resume Ingest (PDF/DOCX) ➔ OCR Fallback ➔ NLP Schema Extraction ➔ Dense Embeddings Matcher ➔ Multi-ML Hiring Classifier ➔ Recruiter Analytics Dashboard",
+      stack: ["Python", "Streamlit", "PyTorch", "Transformers", "NLP / OCR", "Scikit-Learn", "FastAPI", "PDF Engine"],
+      impact: "Automates resume evaluation, achieving 94% ATS scoring accuracy and cutting candidate screening time by 70%.",
+      results: "Ensemble ML models predict hiring suitability with 92.8% confidence and generate exportable PDF reports instantly.",
       consoleLogs: [
-        "> python app/predict_biometrics.py --user-id=9021 --bmr-calc",
-        "[TFLITE] Loading classifier model: pose_landmark_v2.tflite",
-        "[DATA] Inputs: height=180cm, weight=75kg, body_type=athletic",
-        "[AI] PyTorch BMR estimator triggered...",
-        "[AI] BMR calculation: 1845.20 kcal/day | Target macro splits: P:150g, C:200g, F:65g",
-        "[TFLITE] Prediction: pushup_form_alignment = 94.2% - CORRECT",
-        "[SQL] Syncing session variables to SQLite local store...",
-        "Calculations processed in 118ms."
+        "> streamlit run app.py --server.port=8501",
+        "[OCR] Ingesting candidate resume: Dileep_Sai_Resume.pdf",
+        "[NLP] Extracted schema: 18 skills, 4 experiences, 1 patent",
+        "[ATS] Calculating ATS score benchmark: 94/100 (Grade: A+)",
+        "[AI] Running semantic embedding match with JD...",
+        "[AI] Match confidence: 96.4% for 'Senior AI Engineer'",
+        "[ML] Ensemble classifier prediction: Hiring Probability = 92.8%",
+        "[SYS] Generated executive evaluation PDF report in 240ms."
       ]
     }
   ];
@@ -98,35 +98,41 @@ export default function ExecutiveProjects({ resumeData }: ExecutiveProjectsProps
                 transition={{ duration: 0.7, delay: idx * 0.1 }}
                 className="p-8 rounded-3xl bg-slate-950 border border-slate-900 grid grid-cols-1 lg:grid-cols-12 gap-8 hover:border-amber-500/20 transition-all text-left relative overflow-hidden"
               >
-                {/* Meta details */}
-                <div className="lg:col-span-7 flex flex-col justify-between space-y-6 lg:pr-6">
-                  <div>
-                    <span className="px-2.5 py-0.5 rounded bg-amber-500/10 text-amber-500 font-mono text-[9px] font-bold uppercase tracking-wider">
-                      CASE_STUDY 0{idx + 1}
-                    </span>
-                    <h3 className="text-2xl font-black text-white tracking-tight mt-2">
-                      {project.title}
-                    </h3>
-                    <p className="text-xs text-amber-500 font-mono mt-0.5">{project.subtitle}</p>
-                  </div>
+                {/* Visual Glass Spotlight Glow */}
+                <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-amber-500/5 via-indigo-500/5 to-transparent blur-3xl pointer-events-none" />
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs leading-relaxed text-slate-350">
-                    <div className="space-y-1.5">
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-slate-500 font-bold block">The Challenge</span>
-                      <p className="font-sans font-light">{project.challenge}</p>
+                {/* Left Side: System Blueprint Console (7 Cols) */}
+                <div className="lg:col-span-7 space-y-6 flex flex-col justify-between">
+                  <div className="space-y-4">
+                    <div className="space-y-1">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-mono uppercase tracking-widest text-amber-500 font-bold">
+                          SYSTEM #{idx + 1} • PRODUCTION DEPLOYMENT
+                        </span>
+                      </div>
+                      <h3 className="text-2xl font-black text-white tracking-tight">
+                        {project.title}
+                      </h3>
+                      <p className="text-xs text-slate-400 font-mono font-medium">
+                        {project.subtitle}
+                      </p>
                     </div>
-                    <div className="space-y-1.5">
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-amber-500/80 font-bold block">The Solution</span>
-                      <p className="font-sans font-light">{project.solution}</p>
+
+                    <div className="space-y-3 pt-2">
+                      <div className="space-y-1">
+                        <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest block font-bold">System Architecture Problem</span>
+                        <p className="text-xs text-slate-300 leading-relaxed font-light">{project.challenge}</p>
+                      </div>
+
+                      <div className="space-y-1">
+                        <span className="text-[10px] font-mono text-amber-500 uppercase tracking-widest block font-bold">Engineering Implementation</span>
+                        <p className="text-xs text-slate-300 leading-relaxed font-light">{project.solution}</p>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-slate-900/35 border border-slate-900 font-mono text-[10px] text-slate-450 leading-relaxed">
-                    <span className="font-bold text-slate-400 block mb-1">System Data Architecture</span>
-                    <span className="text-slate-300 font-bold block">{project.architecture}</span>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 pt-2">
+                  {/* Tech Stack Badges */}
+                  <div className="flex flex-wrap gap-1.5 pt-4 border-t border-slate-900">
                     {project.stack.map(tag => (
                       <span key={tag} className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-[10px] font-mono text-slate-400">
                         {tag}
@@ -138,12 +144,12 @@ export default function ExecutiveProjects({ resumeData }: ExecutiveProjectsProps
                 {/* Live project apps simulation just like website A */}
                 <div className="lg:col-span-5 flex items-center justify-center">
                   <PreviewShell
-                    accentColor={idx === 0 ? '#38bdf8' : idx === 1 ? '#10b981' : '#34d399'}
-                    label={idx === 0 ? 'NextTrip AI · Live' : idx === 1 ? 'Ujjwal-Hub · Live' : 'FitMitra AI · Live'}
+                    accentColor={idx === 0 ? '#38bdf8' : idx === 1 ? '#10b981' : '#06b6d4'}
+                    label={idx === 0 ? 'NextTrip AI · Live' : idx === 1 ? 'Ujjwal-Hub · Live' : 'HireZeno 2.O · Live'}
                   >
                     {idx === 0 && <NextTripPreview />}
                     {idx === 1 && <UjjwalHubPreview />}
-                    {idx === 2 && <FitMitraPreview />}
+                    {idx === 2 && <HireZenoPreview />}
                   </PreviewShell>
                 </div>
 
